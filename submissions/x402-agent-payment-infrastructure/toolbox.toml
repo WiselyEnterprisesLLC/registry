@@ -1,7 +1,7 @@
 [tool]
 name = "x402-agent-payment-infrastructure"
-version = "0.1.1"
-description = "x402/MCP layer for paid AI/data calls, crypto conversion quotes, progress streams, receipts, and safe agent spend governance."
+version = "0.1.2"
+description = "Remote x402/MCP spend layer for AI agents: quote paid AI/API calls, route crypto conversion, stream progress, and return receipts with clean MCP probe support."
 author = "Wisely Enterprises LLC"
 
 [binary]
@@ -19,7 +19,7 @@ sha512 = ""
 
 [[mcp.tools]]
 name = "agent_payment_manifest"
-description = "Return public service, MCP, and x402 payment metadata for the agent-payment infrastructure."
+description = "Return public service, MCP, docs, and x402 payment metadata for the agent-payment infrastructure."
 
 [[mcp.tools]]
 name = "quote_service"
