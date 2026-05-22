@@ -1,7 +1,7 @@
 [tool]
 name = "x402-agent-payment-infrastructure"
-version = "0.1.2"
-description = "Remote x402/MCP spend layer for AI agents: quote paid AI/API calls, probe external sellers, route crypto conversion, create hosted endpoints, stream progress, and return receipts/logs."
+version = "1.1.0"
+description = "Remote x402/MCP agent-payment infrastructure: quote paid AI/API calls, route crypto conversion, probe external x402 sellers, create hosted endpoints, stream progress, and return receipts/logs."
 author = "Wisely Enterprises LLC"
 
 [binary]
@@ -18,37 +18,81 @@ binary_url = "https://payments.wiselyenterprisesllc.com/ai/mcp"
 sha512 = ""
 
 [[mcp.tools]]
-name = "agent_payment_manifest"
+name = "x402_manifest"
 description = "Return public service, MCP, docs, and x402 payment metadata for the agent-payment infrastructure."
 
 [[mcp.tools]]
-name = "quote_service"
-description = "Quote paid AI/data service calls and crypto conversion routes into required settlement assets."
+name = "wisely_install_profile"
+description = "Return portable install metadata for OpenClaw, Hermes-style agents, Codex/CLI agents, MCP clients, and Bankr-style skill registries."
 
 [[mcp.tools]]
-name = "invoke_service"
+name = "wisely_doctor"
+description = "Return public-safe endpoint wiring, discovery, and verifier readiness checks."
+
+[[mcp.tools]]
+name = "x402_quote_service"
+description = "Quote a hosted AI/data service and payment route."
+
+[[mcp.tools]]
+name = "x402_quote_conversion"
+description = "Quote conversion from caller crypto into the required Base USDC x402 settlement asset."
+
+[[mcp.tools]]
+name = "x402_invoke_service"
 description = "Invoke a paid AI/data service after x402 payment proof or an authorized developer-credit key."
 
 [[mcp.tools]]
-name = "purchase_credits"
+name = "x402_purchase_credits"
 description = "Purchase reusable developer credits through x402/Base USDC."
 
 [[mcp.tools]]
-name = "credit_status"
+name = "x402_credit_status"
 description = "Check developer-credit balances and spend state."
 
 [[mcp.tools]]
-name = "get_receipt"
+name = "x402_get_receipt"
 description = "Fetch receipt and proof records for prior paid calls."
 
 [[mcp.tools]]
-name = "quote_external_x402"
-description = "Quote an external x402 seller or resource and return payment requirements for caller-side wallet signing."
+name = "x402_quote_external"
+description = "Quote an external x402 seller/resource for caller-side wallet signing, including GET or public-safe POST probes."
 
 [[mcp.tools]]
-name = "endpoint_catalog"
+name = "x402_endpoint_catalog"
 description = "List hosted paid x402 endpoints and public endpoint metadata."
 
 [[mcp.tools]]
-name = "endpoint_create_handoff"
-description = "Return the safe builder-key/console handoff for creating or updating hosted paid endpoints."
+name = "x402_dashboard_status"
+description = "Return public dashboard telemetry for traffic, receipts, fees, and endpoint usage."
+
+[[mcp.tools]]
+name = "x402_endpoint_create_handoff"
+description = "Return the safe builder-key, console, CLI, and buyer handoff for creating or updating hosted paid endpoints."
+
+[[mcp.tools]]
+name = "wisely_endpoint_handoff"
+description = "Return portable endpoint-factory instructions and buyer handoff guidance for agents that create or manage paid x402 endpoints."
+
+[[mcp.tools]]
+name = "x402_builder_register"
+description = "Return builder registration guidance for x402, developer-credit, or admin-issued builder keys."
+
+[[mcp.tools]]
+name = "wisely_builder_status"
+description = "Read builder account and owned endpoint status with a saved builder key."
+
+[[mcp.tools]]
+name = "x402_builder_revenue"
+description = "Read builder-owned endpoint revenue, fees, estimated payable balance, receipt IDs, and settlement notes with a saved builder key."
+
+[[mcp.tools]]
+name = "x402_builder_payouts"
+description = "Read/update payout settings and create manual payout request packets without moving funds."
+
+[[mcp.tools]]
+name = "x402_builder_events"
+description = "Search builder-owned endpoint events by time range, endpoint, type, or receipt id."
+
+[[mcp.tools]]
+name = "x402_endpoint_secret_settings"
+description = "Explain endpoint-scoped encrypted secret settings without returning secret values."
