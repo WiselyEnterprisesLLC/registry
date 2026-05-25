@@ -1,7 +1,7 @@
 [tool]
 name = "x402-agent-payment-infrastructure"
-version = "1.1.0"
-description = "Remote x402/MCP agent-payment infrastructure: quote paid AI/API calls, route crypto conversion, probe external x402 sellers, create hosted endpoints, stream progress, and return receipts/logs."
+version = "2.0.0"
+description = "Self-facilitated x402/MCP agent-payment infrastructure: quote paid AI/API calls, route crypto conversion, probe external x402 sellers, create hosted endpoints, stream progress, settle on Base/Solana/XRPL/Stellar rails, and return receipts/logs."
 author = "Wisely Enterprises LLC"
 
 [binary]
@@ -35,7 +35,7 @@ description = "Quote a hosted AI/data service and payment route."
 
 [[mcp.tools]]
 name = "x402_quote_conversion"
-description = "Quote conversion from caller crypto into the required Base USDC x402 settlement asset."
+description = "Quote conversion from caller crypto into the seller-required x402 settlement asset, including Base, Solana, XRPL, and Stellar route handoffs."
 
 [[mcp.tools]]
 name = "x402_invoke_service"
@@ -43,7 +43,7 @@ description = "Invoke a paid AI/data service after x402 payment proof or an auth
 
 [[mcp.tools]]
 name = "x402_purchase_credits"
-description = "Purchase reusable developer credits through x402/Base USDC."
+description = "Purchase reusable developer credits through Wisely x402 settlement rails."
 
 [[mcp.tools]]
 name = "x402_credit_status"
