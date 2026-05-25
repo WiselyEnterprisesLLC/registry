@@ -1,7 +1,7 @@
 [tool]
 name = "x402-agent-payment-infrastructure"
 version = "2.0.0"
-description = "Self-facilitated x402/MCP agent-payment infrastructure: quote paid AI/API calls, route crypto conversion, probe external x402 sellers, create hosted endpoints, stream progress, settle on Base/Solana/XRPL/Stellar rails, and return receipts/logs."
+description = "Remote MCP server for self-facilitated x402 agent payments. Agents can discover paid tools, quote requirements, hand wallet signing to the caller, invoke hosted or external x402 resources, and keep receipts across Base, Solana, XRPL, and Stellar rails."
 author = "Wisely Enterprises LLC"
 
 [binary]
