@@ -1,7 +1,7 @@
 [tool]
 name = "x402-agent-payment-infrastructure"
-version = "2.0.0"
-description = "Remote MCP server for self-facilitated x402 agent payments. Agents can discover paid tools, quote requirements, hand wallet signing to the caller, invoke hosted or external x402 resources, and keep receipts across Base, Solana, XRPL, and Stellar rails."
+version = "2.1.8"
+description = "Remote MCP server for self-facilitated x402 agent payments. Agents can call start_here, discover paid tools, quote x402 and conversion routes, hand wallet signing back to the caller, invoke hosted or external x402 resources, create hosted paid endpoints, use creator/gift-card handoffs, and keep receipts/proofs. Live rail status exposes Base/XRPL/Stellar production proof and Solana as gated until binding live proof passes."
 author = "Wisely Enterprises LLC"
 
 [binary]
@@ -17,6 +17,30 @@ env_vars = []
 binary_url = "https://payments.wiselyenterprisesllc.com/ai/mcp"
 sha512 = ""
 
+# The remote MCP server uses dynamic tool discovery. The live endpoint currently
+# exposes 65 tools. This submission lists the primary stable entry points and
+# aliases that registry users and AI-agent probes should call first.
+
+[[mcp.tools]]
+name = "start_here"
+description = "Call this first. Returns the operating playbook, first-call order, safe payment rules, tool routing map, examples, and links for using this MCP server without installing a separate skill."
+
+[[mcp.tools]]
+name = "wisely_start_here"
+description = "Namespaced alias for start_here. Returns the agent operating playbook for x402 payments, hosted endpoints, creator catalogs, conversion handoffs, receipts, and builder controls."
+
+[[mcp.tools]]
+name = "readme"
+description = "Return the MCP-native README/playbook summary with docs links, workflows, safety rules, and recommended next calls."
+
+[[mcp.tools]]
+name = "install_skill"
+description = "Return the portable Wisely package profile, GitHub install command, MCP URL, CLI commands, and local bridge setup path for OpenClaw, Hermes-style agents, ChatGPT MCP clients, and generic MCP clients."
+
+[[mcp.tools]]
+name = "download_skill"
+description = "Alias for install_skill. Use when an agent or user asks how to download, install, or add Wisely abilities without ClawMart."
+
 [[mcp.tools]]
 name = "x402_manifest"
 description = "Return public service, MCP, docs, and x402 payment metadata for the agent-payment infrastructure."
@@ -31,43 +55,59 @@ description = "Return public-safe endpoint wiring, discovery, and verifier readi
 
 [[mcp.tools]]
 name = "x402_quote_service"
-description = "Quote a hosted AI/data service and payment route."
+description = "Quote a Wisely-hosted AI/data service and payment route."
 
 [[mcp.tools]]
 name = "x402_quote_conversion"
-description = "Quote conversion from caller crypto into the seller-required x402 settlement asset, including Base, Solana, XRPL, and Stellar route handoffs."
+description = "Quote a live executable conversion from the caller's crypto into required Base USDC x402 settlement."
 
 [[mcp.tools]]
-name = "x402_invoke_service"
-description = "Invoke a paid AI/data service after x402 payment proof or an authorized developer-credit key."
+name = "x402_conversion_assets"
+description = "List supported and planned input assets for the Wisely casa de cambio conversion handoff layer."
 
 [[mcp.tools]]
-name = "x402_purchase_credits"
-description = "Purchase reusable developer credits through Wisely x402 settlement rails."
-
-[[mcp.tools]]
-name = "x402_credit_status"
-description = "Check developer-credit balances and spend state."
-
-[[mcp.tools]]
-name = "x402_get_receipt"
-description = "Fetch receipt and proof records for prior paid calls."
+name = "x402_conversion_routes_status"
+description = "Return the current executable and planned conversion route status matrix."
 
 [[mcp.tools]]
 name = "x402_quote_external"
-description = "Quote an external x402 seller/resource for caller-side wallet signing, including GET or public-safe POST probes."
+description = "Probe a third-party x402 seller URL or accept pasted paymentRequirements, then quote how to satisfy it from the caller's crypto."
+
+[[mcp.tools]]
+name = "connect_wallet"
+description = "Plain-English alias for x402_wallet_handoff. Returns a hosted signing URL with wallet-app links and provider selection for ChatGPT or another MCP agent."
+
+[[mcp.tools]]
+name = "x402_wallet_handoff"
+description = "Create a short-lived hosted wallet signing session. The user signs in their own wallet, then the agent polls status and retries with X-PAYMENT. No private keys or seed phrases are accepted."
+
+[[mcp.tools]]
+name = "x402_payment_session_status"
+description = "Check a wallet handoff session. After the user signs, returns the signed X-PAYMENT header and paid-retry instructions for the agent."
+
+[[mcp.tools]]
+name = "x402_invoke_service"
+description = "Invoke a paid AI/data service through /ai/invoke after x402 payment proof or developer-credit authorization."
+
+[[mcp.tools]]
+name = "x402_purchase_credits"
+description = "Purchase or top up reusable developer credits through x402."
+
+[[mcp.tools]]
+name = "x402_credit_status"
+description = "Read developer-credit account status with a developer key."
+
+[[mcp.tools]]
+name = "x402_get_receipt"
+description = "Fetch a public-safe receipt by receipt id."
 
 [[mcp.tools]]
 name = "x402_endpoint_catalog"
-description = "List hosted paid x402 endpoints and public endpoint metadata."
-
-[[mcp.tools]]
-name = "x402_dashboard_status"
-description = "Return public dashboard telemetry for traffic, receipts, fees, and endpoint usage."
+description = "List hosted paid x402 endpoints under /tools/{slug}."
 
 [[mcp.tools]]
 name = "x402_endpoint_create_handoff"
-description = "Return the safe builder-key, console, CLI, and buyer handoff for creating or updating hosted paid endpoints."
+description = "Return endpoint-factory instructions for builder registration, create/update/pause/resume/delete/logs/secrets, CLI deploy, browser console, and request-response handlers."
 
 [[mcp.tools]]
 name = "wisely_endpoint_handoff"
@@ -75,7 +115,7 @@ description = "Return portable endpoint-factory instructions and buyer handoff g
 
 [[mcp.tools]]
 name = "x402_builder_register"
-description = "Return builder registration guidance for x402, developer-credit, or admin-issued builder keys."
+description = "Register for a builder key through x402, developer credit, or admin issue; returned key controls only that builder's endpoints."
 
 [[mcp.tools]]
 name = "wisely_builder_status"
@@ -95,4 +135,88 @@ description = "Search builder-owned endpoint events by time range, endpoint, typ
 
 [[mcp.tools]]
 name = "x402_endpoint_secret_settings"
-description = "Explain endpoint-scoped encrypted secret settings without returning secret values."
+description = "Explain how endpoint-scoped encrypted secrets are added and listed by name without returning secret values."
+
+[[mcp.tools]]
+name = "wisely_creator_onboarding_preview"
+description = "Preview a creator catalog import from Markdown, CSV, JSON, or item arrays. Does not persist content or create paid endpoints."
+
+[[mcp.tools]]
+name = "wisely_creator_onboarding_handoff"
+description = "Explain how to publish creator catalogs with entitlement rules, paid actions, and builder-key controlled paid endpoint creation."
+
+[[mcp.tools]]
+name = "wisely_creator_catalog_list"
+description = "List public creator catalogs that expose approved lessons, worksheets, and paid tools to AI agents."
+
+[[mcp.tools]]
+name = "wisely_creator_catalog_search"
+description = "Search a creator catalog for the best approved free, subscriber, or paid item for a user's situation."
+
+[[mcp.tools]]
+name = "wisely_creator_catalog_recommend"
+description = "Recommend the next creator-catalog action for a subscriber situation, including fetch instructions or paid endpoint 402 probe instructions."
+
+[[mcp.tools]]
+name = "wisely_creator_catalog_fetch"
+description = "Fetch a creator catalog item. Paid items return a paid endpoint URL and payment instructions instead of protected content."
+
+[[mcp.tools]]
+name = "setup_local_wallet_bridge"
+description = "Return setup instructions for local wallet signing and proof storage. Keeps the user's wallet local while the agent uses Wisely x402 payment sessions."
+
+[[mcp.tools]]
+name = "setup_local_commerce_bridge"
+description = "Return novice-friendly setup for a local browser/commerce bridge for DoorDash, merchant checkout, local wallet signing, and local receipt/gift-card storage."
+
+[[mcp.tools]]
+name = "x402_gift_card_discover_options"
+description = "Search Bitrefill-supported gift-card merchants by category or query, returning product IDs, countries, stock, minimums, maxes, and custom/fixed denomination data."
+
+[[mcp.tools]]
+name = "x402_gift_card_merchant_quote"
+description = "Quote any Bitrefill-supported merchant gift-card purchase after product details are fetched, using $0.75 + 1% plus explicit route/network costs."
+
+[[mcp.tools]]
+name = "x402_gift_card_commerce_quote"
+description = "Quote a gift-card-funded merchant purchase with a $0.75 direct commerce service fee, 1% Wisely fee, and explicit gas/network/route costs. No gift card is purchased and no order is placed."
+
+[[mcp.tools]]
+name = "x402_gift_card_commerce_status"
+description = "Return the gift-card-funded commerce lane status, provider readiness, DoorDash disabled gate, pricing/reserve policy, and safe setup steps."
+
+[[mcp.tools]]
+name = "x402_doordash_gift_card_process"
+description = "Return or run the DoorDash gift-card-funded quote flow: cart totals, Bitrefill custom range, $15 minimum, crypto conversion/gas, $0.75 service fee, 1% fee, approval packet, and execution stages."
+
+[[mcp.tools]]
+name = "x402_rye_commerce_handoff"
+description = "Return the Rye x402 checkout-intent flow for commerce URL checkout attempts, including DoorDash-via-Rye caveats, quote examples, and final-confirmation approval rules."
+
+[[mcp.tools]]
+name = "x402_rail_status"
+description = "Return proof-based readiness for Base, Solana, XRPL, Stellar, LINK, conversion, and scale gates."
+
+[[mcp.tools]]
+name = "x402_proof_cache_status"
+description = "Return the latest cached public proof bundle for Base, Solana, manifests, receipts, and reconciliation."
+
+[[mcp.tools]]
+name = "x402_dashboard_status"
+description = "Return public dashboard telemetry for traffic, receipts, fees, and endpoint usage."
+
+[[mcp.tools]]
+name = "x402_alert_status"
+description = "Return public-safe alerting status and recent rail/provider operational notices."
+
+[[mcp.tools]]
+name = "x402_integration_status"
+description = "Return combined MCP, hosted endpoint, provider-method, rail, conversion, receipt, and alert readiness for outside agents."
+
+[[mcp.tools]]
+name = "x402_state_status"
+description = "Return public-safe durable-state status, migration metadata, DB counts, and JSON compatibility status."
+
+[[mcp.tools]]
+name = "x402_signer_status"
+description = "Return public-safe signer gateway/custody status and KMS/HSM migration readiness for the Base facilitator relayer."
